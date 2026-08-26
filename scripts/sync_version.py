@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Keep release versions synchronized across Python and Lightroom metadata."""
 
 from __future__ import annotations

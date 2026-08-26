@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Cross-platform development commands for Chameleon.lr.
 
 This entry point intentionally uses only the Python standard library. It gives Windows,
@@ -18,7 +17,6 @@ import subprocess
 import sys
 from collections.abc import Callable, Sequence
 from pathlib import Path
-
 
 ROOT = Path(__file__).resolve().parents[1]
 BACKEND = ROOT / "backend"

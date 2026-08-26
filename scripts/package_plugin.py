@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Create the versioned Lightroom plugin release archive."""
 
 from __future__ import annotations

@@ -6,7 +6,6 @@ from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont, ImageOps
 
-
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS = ROOT / "demo" / "output" / "assets"
 OUTPUT = ROOT / "docs" / "assets" / "readme-preview.jpg"

@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Build, smoke-test, and archive a native Chameleon engine executable."""
 
 from __future__ import annotations
