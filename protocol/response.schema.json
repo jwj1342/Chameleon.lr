@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chameleon.lr/schemas/response.schema.json",
+  "title": "Chameleon fit response",
+  "type": "object",
+  "required": ["schema_version", "request_id", "status", "engine", "results", "errors"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "request_id": { "type": "string" },
+    "status": { "enum": ["ok", "partial", "error"] },
+    "engine": {
+      "type": "object",
+      "required": ["name", "version"],
+      "properties": {
+        "name": { "type": "string" },
+        "version": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "created_at": { "type": "string" },
+    "results": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["photo_id", "develop_settings", "diagnostics"],
+        "properties": {
+          "photo_id": { "type": "string" },
+          "develop_settings": { "type": "object", "minProperties": 1 },
+          "diagnostics": { "type": "object" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "errors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["photo_id", "message"],
+        "properties": {
+          "photo_id": { "type": "string" },
+          "message": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

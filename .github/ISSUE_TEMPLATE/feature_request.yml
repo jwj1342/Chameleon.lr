@@ -1,0 +1,54 @@
+name: Feature request / 功能建议
+description: Propose a user outcome or measurable workflow improvement.
+title: "[Feature]: "
+labels: ["enhancement", "needs-triage"]
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area / 模块
+      options:
+        - Adaptive algorithm
+        - Lightroom workflow / UI
+        - Develop Settings support
+        - Protocol / engine transport
+        - Testing / evaluation
+        - Packaging / release
+        - Documentation
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: User problem / 用户问题
+      description: Describe the workflow pain or missing outcome, not only a preferred technology.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior / 建议行为
+      description: What should the user be able to do, and what should happen?
+    validations:
+      required: true
+  - type: textarea
+    id: success
+    attributes:
+      label: Success criteria / 验收标准
+      description: Give observable or measurable evidence that would make this complete.
+    validations:
+      required: true
+  - type: textarea
+    id: tradeoffs
+    attributes:
+      label: Alternatives and tradeoffs / 替代方案与取舍
+      description: Include protocol, privacy, performance, Lightroom compatibility, or data implications.
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checklist / 检查项
+      options:
+        - label: I checked the project definition, roadmap, and existing issues.
+          required: true
+        - label: I can provide tests, evaluation data, or implementation help where noted above.
+          required: false

@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "request_id": "example-001",
+  "reference": {
+    "id": "101",
+    "preview_path": "runtime/reference.jpg",
+    "develop_settings": {
+      "Exposure2012": 0.65,
+      "Contrast2012": 18,
+      "Highlights2012": -32,
+      "Shadows2012": 20,
+      "Vibrance": 12
+    },
+    "metadata": {
+      "iso": 400,
+      "file_format": "RAW"
+    }
+  },
+  "targets": [
+    {
+      "id": "102",
+      "preview_path": "runtime/target-102.jpg",
+      "develop_settings": {
+        "Exposure2012": 0,
+        "Temperature": 5400,
+        "Tint": 3
+      },
+      "metadata": {
+        "iso": 800,
+        "file_format": "RAW"
+      }
+    }
+  ],
+  "options": {
+    "strength": 1,
+    "adapt_exposure": true,
+    "adapt_white_balance": true
+  }
+}

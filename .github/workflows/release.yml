@@ -1,0 +1,102 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    name: Quality gate
+    uses: ./.github/workflows/ci.yml
+
+  plugin:
+    name: Package Lightroom plugin
+    needs: quality
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Synchronize artifact version from tag
+        run: python3 scripts/sync_version.py --version "${{ github.ref_name }}"
+      - name: Build plugin archive
+        run: python3 scripts/package_plugin.py --output-dir dist
+      - name: Upload plugin artifact
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: release-lightroom-plugin
+          path: dist/Chameleon.lrplugin-*.zip
+          if-no-files-found: error
+          retention-days: 1
+
+  engine:
+    name: Engine ${{ matrix.target }}
+    needs: quality
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: windows-x86_64
+            runner: windows-2025
+          - target: macos-x86_64
+            runner: macos-15-intel
+          - target: macos-arm64
+            runner: macos-15
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: backend/pyproject.toml
+      - name: Synchronize artifact version from tag
+        run: python scripts/sync_version.py --version "${{ github.ref_name }}"
+      - name: Install release dependencies
+        run: python -m pip install './backend[release]'
+      - name: Build and smoke-test engine
+        run: python scripts/build_engine.py --output-dir dist
+      - name: Upload engine artifact
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: release-engine-${{ matrix.target }}
+          path: dist/chameleon-engine-*
+          if-no-files-found: error
+          retention-days: 1
+
+  publish:
+    name: Publish GitHub Release
+    needs: [plugin, engine]
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - name: Download release artifacts
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          pattern: release-*
+          path: release-assets
+          merge-multiple: true
+      - name: Create SHA-256 checksums
+        working-directory: release-assets
+        run: sha256sum * > SHA256SUMS.txt
+      - name: Create or update GitHub Release
+        working-directory: release-assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          if gh release view "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release upload "$RELEASE_TAG" ./* --clobber --repo "$GITHUB_REPOSITORY"
+          else
+            gh release create "$RELEASE_TAG" ./* \
+              --generate-notes \
+              --title "Chameleon.lr $RELEASE_TAG" \
+              --verify-tag \
+              --repo "$GITHUB_REPOSITORY"
+          fi

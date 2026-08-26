@@ -1,0 +1,21 @@
+.DS_Store
+Thumbs.db
+*.log
+*.py[cod]
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.venv/
+venv/
+dist/
+build/
+*.egg-info/
+.coverage
+htmlcov/
+
+# Lightroom/runtime artifacts
+*.lrplugin.zip
+.chameleon-work/
+tests/.tmp/
+demo/output/

@@ -1,0 +1,78 @@
+name: Bug report / 缺陷报告
+description: Report a reproducible engine, plugin, CI, or documentation problem.
+title: "[Bug]: "
+labels: ["bug", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢报告问题。安全漏洞请使用仓库的私密 Security Advisory，不要填写此表。
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area / 模块
+      options:
+        - Python engine
+        - Lightroom Lua plugin
+        - Protocol / packaging
+        - CI/CD
+        - Documentation
+        - Unsure
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version / 版本
+      description: Git commit, tag, or release artifact name.
+      placeholder: main @ abc1234 or v0.2.0
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment / 环境
+      description: OS, Lightroom Classic version, Python version, and engine mode where relevant.
+      placeholder: macOS 15, Lightroom Classic 14.x, standalone arm64
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Reproduction / 复现步骤
+      description: Provide the smallest deterministic sequence that reproduces the problem.
+      placeholder: |
+        1. Select ...
+        2. Run ...
+        3. Observe ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior / 期望行为
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior and logs / 实际行为与日志
+      description: Include only the minimal sanitized output. Remove paths, EXIF, catalog IDs, and photo data.
+    validations:
+      required: true
+  - type: textarea
+    id: extra
+    attributes:
+      label: Additional context / 补充信息
+      description: Synthetic fixture, screenshots, regression commit, or attempted workaround.
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checklist / 检查项
+      options:
+        - label: I searched existing issues and read the known limitations.
+          required: true
+        - label: This report contains no private photos, metadata, catalog data, or sensitive paths.
+          required: true
+        - label: This is not a security vulnerability.
+          required: true
