@@ -25,7 +25,7 @@ jobs:
       - name: Build plugin archive
         run: python3 scripts/package_plugin.py --output-dir dist
       - name: Upload plugin artifact
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: release-lightroom-plugin
           path: dist/Chameleon.lrplugin-*.zip
@@ -62,7 +62,7 @@ jobs:
       - name: Build and smoke-test engine
         run: python scripts/build_engine.py --output-dir dist
       - name: Upload engine artifact
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: release-engine-${{ matrix.target }}
           path: dist/chameleon-engine-*
