@@ -16,7 +16,7 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = [
-  "pytest>=8.0,<10",
+  "pytest>=9.2.0,<10",
   "ruff==0.16.4",
 ]
 release = [
